@@ -1,10 +1,11 @@
 def calculate():
     print("Time it takes to send a picture from Mars to Earth!!")
-    x = 34000000 / 186000
-    y = x / 60
+    distance = 34000000
+    speed = 186000
+    time = distance / speed
     print("It takes:")
-    print(x , "Seconds")
+    print(time , "Seconds")
     print("*or*")
-    print(y , "Minutes")
+    print(time / 60 , "Minutes")
     print("Type 'Calculate()' to see it happen again!")
 calculate()
