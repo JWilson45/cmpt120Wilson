@@ -231,27 +231,46 @@ txtequal.draw(win)
 
 
 #Maths begin
-#Question - Should getting the click be done with many if and elif statments?
 
 def calculate():
-    click = win.getMouse()
-    if click in range(Point(pC1.getX(),pC1.getY()),Point(pC2.getX(),pC2.getY())):
-        print("good")
-    else:
-        print(click)
-        print('bad')
-        calculate()
-
-#calculate()
-
-#WIP
-def calculate1():
-    click = win.getMouse()
-    if click.getX() > (Point(pC1.getX(),pC1.getY()),Point(pC2.getX(),pC2.getY())):
-        print("good")
-    else:
-        print(click)
-        print('bad')
-        calculate1()
-
-#calculate1()
+    while 1 == 1:
+        click = win.getMouse()
+        if pC1.getX() < click.getX() < pC2.getX() and pC1.getY() > click.getY() > pC2.getY():
+            print('Clear')
+        if p71.getX() < click.getX() < p72.getX() and p71.getY() > click.getY() > p72.getY():
+            print('7')
+        if p41.getX() < click.getX() < p42.getX() and p41.getY() > click.getY() > p42.getY():
+            print('4')
+        if p11.getX() < click.getX() < p12.getX() and p11.getY() > click.getY() > p12.getY():
+            print('1')
+        if pNeg1.getX() < click.getX() < pNeg2.getX() and pNeg1.getY() > click.getY() > pNeg2.getY():
+            print('Negitive')
+        if p81.getX() < click.getX() < p82.getX() and p81.getY() > click.getY() > p82.getY():
+            print('8')
+        if p51.getX() < click.getX() < p52.getX() and p51.getY() > click.getY() > p52.getY():
+            print('5')
+        if p21.getX() < click.getX() < p22.getX() and p21.getY() > click.getY() > p22.getY():
+            print('2')
+        if p01.getX() < click.getX() < p02.getX() and p01.getY() > click.getY() > p02.getY():
+            print('0')
+        if pPrecent1.getX() < click.getX() < pPrecent2.getX() and pPrecent1.getY() > click.getY() > pPrecent2.getY():
+            print('%')
+        if p91.getX() < click.getX() < p92.getX() and p91.getY() > click.getY() > p92.getY():
+            print('9')
+        if p61.getX() < click.getX() < p62.getX() and p61.getY() > click.getY() > p62.getY():
+            print('6')
+        if p31.getX() < click.getX() < p32.getX() and p31.getY() > click.getY() > p32.getY():
+            print('3')
+        if pp1.getX() < click.getX() < pp2.getX() and pp1.getY() > click.getY() > pp2.getY():
+            print('.')
+        if devide1.getX() < click.getX() < devide2.getX() and devide1.getY() > click.getY() > devide2.getY():
+            print('/')
+        if mult1.getX() < click.getX() < mult2.getX() and mult1.getY() > click.getY() > mult2.getY():
+            print('*')
+        if sub1.getX() < click.getX() < sub2.getX() and sub1.getY() > click.getY() > sub2.getY():
+            print('-')
+        if add1.getX() < click.getX() < add2.getX() and add1.getY() > click.getY() > add2.getY():
+            print('+')
+        if equal1.getX() < click.getX() < equal2.getX() and equal1.getY() > click.getY() > equal2.getY():
+            print('=')
+calculate()
