@@ -48,9 +48,6 @@ p01 = Point(p11.getX(), p11.getY() - buttonwidth + 2)
 p02 = Point(p12.getX() + buttonwidth, p12.getY() - buttonwidth + 2)
 num0 = Rectangle(p01,p02)
 
-txt0 = Text(Point(p12.getX(), p12.getY() - buttonwidth / 2 + 1), "0")
-txt0.draw(win)
-
 num0.draw(win)
 
 
@@ -149,3 +146,112 @@ equal2 = Point(add2.getX(), add2.getY() - buttonwidth + 2)
 equal = Rectangle(equal1,equal2)
 
 equal.draw(win)
+
+# Numbers for each button
+# Row 1
+txtpc = Point(pC1.getX() + buttonwidth / 2,
+              pC2.getY() + buttonwidth / 2 - 1.25)
+
+txtc = Text(txtpc,"C")
+txtc.draw(win)
+
+txt7 = Text(Point(txtpc.getX(), txtpc.getY() - buttonwidth + 2) ,'7')
+txt7.draw(win)
+
+txt4 = Text(Point(txtpc.getX(), txtpc.getY() - buttonwidth * 2 + 4) ,'4')
+txt4.draw(win)
+
+txt1 = Text(Point(txtpc.getX(), txtpc.getY() - buttonwidth * 3 + 6) ,'1')
+txt1.draw(win)
+
+txt0 = Text(Point(p12.getX(), p12.getY() - buttonwidth / 2 + 1), '0')
+txt0.draw(win)
+
+# Row 2
+txtneg = Point(txtpc.getX() + buttonwidth, txtpc.getY())
+
+txtneg1 = Text(txtneg,'+ / -')
+txtneg1.draw(win)
+
+txt8 = Text(Point(txtneg.getX(), txtneg.getY() - buttonwidth + 2) ,'8')
+txt8.draw(win)
+
+txt5 = Text(Point(txtneg.getX(), txtneg.getY() - buttonwidth * 2 + 4) ,'5')
+txt5.draw(win)
+
+txt2 = Text(Point(txtneg.getX(), txtneg.getY() - buttonwidth * 3 + 6) ,'2')
+txt2.draw(win)
+
+# Row 3
+txtpercent = Point(txtneg.getX() + buttonwidth, txtneg.getY())
+
+txtpercent1 = Text(txtpercent,'%')
+txtpercent1.draw(win)
+
+txt9 = Text(Point(txtpercent.getX(), txtpercent.getY()
+                  - buttonwidth + 2) ,'9')
+txt9.draw(win)
+
+txt6 = Text(Point(txtpercent.getX(), txtpercent.getY()
+                  - buttonwidth * 2 + 4) ,'6')
+txt6.draw(win)
+
+txt3 = Text(Point(txtpercent.getX(), txtpercent.getY()
+                  - buttonwidth * 3 + 6) ,'3')
+txt3.draw(win)
+
+txtpoint = Text(Point(txtpercent.getX(), txtpercent.getY()
+                  - buttonwidth * 4 + 8) ,'.')
+txtpoint.draw(win)
+
+# Row 4
+txtdivi = Point(txtpercent.getX() + buttonwidth, txtpercent.getY())
+
+txtdivi1 = Text(txtdivi,'/')
+txtdivi1.draw(win)
+
+txtmult = Text(Point(txtdivi.getX(), txtdivi.getY() - buttonwidth + 2),'x')
+txtmult.draw(win)
+
+txtsub = Text(Point(txtdivi.getX(), txtdivi.getY() - buttonwidth * 2 + 4),'-')
+txtsub.draw(win)
+
+txtadd = Text(Point(txtdivi.getX(), txtdivi.getY() - buttonwidth * 3 + 6),'+')
+txtadd.draw(win)
+
+txtequal = Text(Point(txtdivi.getX(), txtdivi.getY() - buttonwidth * 4 + 8),'=')
+txtequal.draw(win)
+
+
+
+
+##Calculator graphics end
+
+
+
+
+#Maths begin
+#Question - Should getting the click be done with many if and elif statments?
+
+def calculate():
+    click = win.getMouse()
+    if click in range(Point(pC1.getX(),pC1.getY()),Point(pC2.getX(),pC2.getY())):
+        print("good")
+    else:
+        print(click)
+        print('bad')
+        calculate()
+
+#calculate()
+
+#WIP
+def calculate1():
+    click = win.getMouse()
+    if click.getX() > (Point(pC1.getX(),pC1.getY()),Point(pC2.getX(),pC2.getY())):
+        print("good")
+    else:
+        print(click)
+        print('bad')
+        calculate1()
+
+#calculate1()
