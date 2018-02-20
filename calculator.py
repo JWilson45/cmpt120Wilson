@@ -231,10 +231,43 @@ txtequal.draw(win)
 
 
 #Maths begin
+#Get click
+
+#def clicking(v1,v2,texts):
+#    click = win.getMouse()
+#    if v1.getX() < click.getX() < v2.getX() and v1.getY() > click.getY() > v2.getY():
+#        print(texts)
+#    else:
+#        print("no")
 
 def calculate():
+    
     while 1 == 1:
         click = win.getMouse()
+#        clicking(pC1,pC2,'Clear')
+#        clicking(p71,p72,'7')
+#        clicking(p41,p42,'4')
+#        clicking(p11,p12,'1')
+#        clicking(p01,p02,'0')
+#        clicking(pNeg1,pNeg2,'Negitive')
+#        clicking(p81,p82,'8')
+#        clicking(p51,p52,'5')
+#        clicking(p21,p22,'2')
+#        clicking(pPrecent1,pPrecent2,'%')
+#        clicking(p91,p92,'9')
+#        clicking(p61,p62,'6')
+#        clicking(p31,p32,'3')
+#        clicking(pp1,pp2,'.')
+#        clicking(devide1,devide2,'/')
+#        clicking(mult1,mult2,'*')
+#        clicking(sub1,sub2,'-')
+#        clicking(add1,add2,'+')
+#        clicking(equal1,equal2,'=')
+        
+        
+
+        
+        
         if pC1.getX() < click.getX() < pC2.getX() and pC1.getY() > click.getY() > pC2.getY():
             print('Clear')
         if p71.getX() < click.getX() < p72.getX() and p71.getY() > click.getY() > p72.getY():
