@@ -3,8 +3,8 @@
 # Author: Jason Wison
 # Created: 2018-02-20
 def FirstandLast():
-    first = input("Enter your first name: ")
-    last = input("Enter your last name: ")
+    first,last = input("Enter your first name: "),input("Enter your last name: ")
+    first,last = first.lower(),last.lower()
     return [first,last]
 
 def username(first,last):
@@ -12,12 +12,30 @@ def username(first,last):
     return uname
 
 def pword():
-    passwd = input("Create a new password: ")
-    while len(passwd) < 8:
-        print("Fool of a Took! That password is feeble!")
-        passwd = input("Create a new password: ")
-    return passwd
-   
+    strong = 1
+    while strong == 1:
+        strong = pstrong(input("Create a new password: "))
+        strong = pcapcheck(strong)
+    return strong
+
+def pstrong(pa):
+    while len(pa) < 8:
+        print("Fool of a Took! That password is feeble! Make it longer!")
+        return 1
+    return pa
+
+def pcapcheck(cap):
+    if cap == 1:
+        return 1
+    passCoppy1,passCoppy2 = cap,cap
+    passCoppy1 = passCoppy1.upper()
+    passCoppy2 = passCoppy2.lower()
+    if passCoppy1 == cap or passCoppy2 == cap:
+        print('Your password needs UPPER and lower case characters')
+        return 1
+    else:
+        return cap
+
 def main():
     name = FirstandLast()
     uname = username(name[0],name[1])
