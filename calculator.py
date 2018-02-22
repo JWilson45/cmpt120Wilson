@@ -231,16 +231,9 @@ txtequal.draw(win)
 
 
 #Maths begin
-#Get click
 
-#def clicking(v1,v2,texts):
-#    click = win.getMouse()
-#    if v1.getX() < click.getX() < v2.getX() and v1.getY() > click.getY() > v2.getY():
-#        print(texts)
-#    else:
-#        print("no")
 
-def calculate():
+def getclick():
     while 1 == 1:
         click = win.getMouse()
         if pC1.getX() < click.getX() < pC2.getX() and pC1.getY() > click.getY() > pC2.getY():
@@ -282,27 +275,6 @@ def calculate():
         if equal1.getX() < click.getX() < equal2.getX() and equal1.getY() > click.getY() > equal2.getY():
             return '='
 
-#        clicking(pC1,pC2,'Clear')
-#        clicking(p71,p72,'7')
-#        clicking(p41,p42,'4')
-#        clicking(p11,p12,'1')
-#        clicking(p01,p02,'0')
-#        clicking(pNeg1,pNeg2,'Negitive')
-#        clicking(p81,p82,'8')
-#        clicking(p51,p52,'5')
-#        clicking(p21,p22,'2')
-#        clicking(pPrecent1,pPrecent2,'%')
-#        clicking(p91,p92,'9')
-#        clicking(p61,p62,'6')
-#        clicking(p31,p32,'3')
-#        clicking(pp1,pp2,'.')
-#        clicking(devide1,devide2,'/')
-#        clicking(mult1,mult2,'*')
-#        clicking(sub1,sub2,'-')
-#        clicking(add1,add2,'+')
-#        clicking(equal1,equal2,'=')
-
-
 def main():
     display = ''
     displaypoint = Point(devide1.getX() + 3, devide2.getY() + buttonwidth + 1)
@@ -310,7 +282,7 @@ def main():
     displayElement.draw(win)
     while 1 == 1:
         while display[-1:] != '=':
-            display = display + str(calculate())
+            display = display + str(getclick())
             displayElement.undraw()
             displayElement = Text(displaypoint,display)
             print(display)
@@ -340,8 +312,5 @@ def main():
         display = str(display)
         displayElement = Text(displaypoint,display)
         displayElement.draw(win)
-        win.getMouse()
-        displayElement.undraw()
-        display = ''
 
 main()
