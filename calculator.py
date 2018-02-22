@@ -241,9 +241,47 @@ txtequal.draw(win)
 #        print("no")
 
 def calculate():
-    
     while 1 == 1:
         click = win.getMouse()
+        if pC1.getX() < click.getX() < pC2.getX() and pC1.getY() > click.getY() > pC2.getY():
+            return 'Clear'
+        if p71.getX() < click.getX() < p72.getX() and p71.getY() > click.getY() > p72.getY():
+            return 7
+        if p41.getX() < click.getX() < p42.getX() and p41.getY() > click.getY() > p42.getY():
+            return 4
+        if p11.getX() < click.getX() < p12.getX() and p11.getY() > click.getY() > p12.getY():
+            return 1
+        if pNeg1.getX() < click.getX() < pNeg2.getX() and pNeg1.getY() > click.getY() > pNeg2.getY():
+            return '$'
+        if p81.getX() < click.getX() < p82.getX() and p81.getY() > click.getY() > p82.getY():
+            return 8
+        if p51.getX() < click.getX() < p52.getX() and p51.getY() > click.getY() > p52.getY():
+            return 5
+        if p21.getX() < click.getX() < p22.getX() and p21.getY() > click.getY() > p22.getY():
+            return 2
+        if p01.getX() < click.getX() < p02.getX() and p01.getY() > click.getY() > p02.getY():
+            return 0
+        if pPrecent1.getX() < click.getX() < pPrecent2.getX() and pPrecent1.getY() > click.getY() > pPrecent2.getY():
+            return '%'
+        if p91.getX() < click.getX() < p92.getX() and p91.getY() > click.getY() > p92.getY():
+            return 9
+        if p61.getX() < click.getX() < p62.getX() and p61.getY() > click.getY() > p62.getY():
+            return 6
+        if p31.getX() < click.getX() < p32.getX() and p31.getY() > click.getY() > p32.getY():
+            return 3
+        if pp1.getX() < click.getX() < pp2.getX() and pp1.getY() > click.getY() > pp2.getY():
+            return '.'
+        if devide1.getX() < click.getX() < devide2.getX() and devide1.getY() > click.getY() > devide2.getY():
+            return '/'
+        if mult1.getX() < click.getX() < mult2.getX() and mult1.getY() > click.getY() > mult2.getY():
+            return '*'
+        if sub1.getX() < click.getX() < sub2.getX() and sub1.getY() > click.getY() > sub2.getY():
+            return '-'
+        if add1.getX() < click.getX() < add2.getX() and add1.getY() > click.getY() > add2.getY():
+            return '+'
+        if equal1.getX() < click.getX() < equal2.getX() and equal1.getY() > click.getY() > equal2.getY():
+            return '='
+
 #        clicking(pC1,pC2,'Clear')
 #        clicking(p71,p72,'7')
 #        clicking(p41,p42,'4')
@@ -263,47 +301,47 @@ def calculate():
 #        clicking(sub1,sub2,'-')
 #        clicking(add1,add2,'+')
 #        clicking(equal1,equal2,'=')
-        
-        
 
-        
-        
-        if pC1.getX() < click.getX() < pC2.getX() and pC1.getY() > click.getY() > pC2.getY():
-            print('Clear')
-        if p71.getX() < click.getX() < p72.getX() and p71.getY() > click.getY() > p72.getY():
-            print('7')
-        if p41.getX() < click.getX() < p42.getX() and p41.getY() > click.getY() > p42.getY():
-            print('4')
-        if p11.getX() < click.getX() < p12.getX() and p11.getY() > click.getY() > p12.getY():
-            print('1')
-        if pNeg1.getX() < click.getX() < pNeg2.getX() and pNeg1.getY() > click.getY() > pNeg2.getY():
-            print('Negitive')
-        if p81.getX() < click.getX() < p82.getX() and p81.getY() > click.getY() > p82.getY():
-            print('8')
-        if p51.getX() < click.getX() < p52.getX() and p51.getY() > click.getY() > p52.getY():
-            print('5')
-        if p21.getX() < click.getX() < p22.getX() and p21.getY() > click.getY() > p22.getY():
-            print('2')
-        if p01.getX() < click.getX() < p02.getX() and p01.getY() > click.getY() > p02.getY():
-            print('0')
-        if pPrecent1.getX() < click.getX() < pPrecent2.getX() and pPrecent1.getY() > click.getY() > pPrecent2.getY():
-            print('%')
-        if p91.getX() < click.getX() < p92.getX() and p91.getY() > click.getY() > p92.getY():
-            print('9')
-        if p61.getX() < click.getX() < p62.getX() and p61.getY() > click.getY() > p62.getY():
-            print('6')
-        if p31.getX() < click.getX() < p32.getX() and p31.getY() > click.getY() > p32.getY():
-            print('3')
-        if pp1.getX() < click.getX() < pp2.getX() and pp1.getY() > click.getY() > pp2.getY():
-            print('.')
-        if devide1.getX() < click.getX() < devide2.getX() and devide1.getY() > click.getY() > devide2.getY():
-            print('/')
-        if mult1.getX() < click.getX() < mult2.getX() and mult1.getY() > click.getY() > mult2.getY():
-            print('*')
-        if sub1.getX() < click.getX() < sub2.getX() and sub1.getY() > click.getY() > sub2.getY():
-            print('-')
-        if add1.getX() < click.getX() < add2.getX() and add1.getY() > click.getY() > add2.getY():
-            print('+')
-        if equal1.getX() < click.getX() < equal2.getX() and equal1.getY() > click.getY() > equal2.getY():
-            print('=')
-calculate()
+
+def main():
+    display = ''
+    displaypoint = Point(devide1.getX() + 3, devide2.getY() + buttonwidth + 1)
+    displayElement = Text(displaypoint, display)
+    displayElement.draw(win)
+    while 1 == 1:
+        while display[-1:] != '=':
+            display = display + str(calculate())
+            displayElement.undraw()
+            displayElement = Text(displaypoint,display)
+            print(display)
+            displayElement.draw(win)
+            if display[-5:] == 'Clear':
+                display = ''
+                displayElement.undraw()
+            if display[-1:] == '%':
+                displayElement.undraw()
+                display = display[:-1]
+                display = display + '/ 100'
+                display = eval(display)
+                display = str(display)
+                displayElement = Text(displaypoint,display)
+                displayElement.draw(win)
+            if display[-1:] == '$':
+                displayElement.undraw()
+                display = display[:-1]
+                display = display + '* -1'
+                display = eval(display)
+                display = str(display)
+                displayElement = Text(displaypoint,display)
+                displayElement.draw(win)
+        display = display[:-1]
+        display = eval(display)
+        displayElement.undraw()
+        display = str(display)
+        displayElement = Text(displaypoint,display)
+        displayElement.draw(win)
+        win.getMouse()
+        displayElement.undraw()
+        display = ''
+
+main()
