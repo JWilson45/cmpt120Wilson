@@ -37,8 +37,8 @@ def determine(string):
         string = add(x,y)
         string = str(string)
         return string
-    if '*' in string:
-        string = string.split('*')
+    if 'x' in string:
+        string = string.split('x')
         x,y = setup(string)
         string = multiply(x,y)
         string = str(string)
