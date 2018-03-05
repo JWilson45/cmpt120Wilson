@@ -25,8 +25,8 @@ def percent(x):
     return x
 
 def setup(string):
-    x = int(string[0])
-    y = int(string[1])
+    x = float(string[0])
+    y = float(string[1])
     return x,y
     
 def determine(string):
