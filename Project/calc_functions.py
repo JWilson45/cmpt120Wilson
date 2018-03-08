@@ -42,17 +42,16 @@ def setup(string):
 def determine(string):
     if string[1] == '+':
         x,y = setup(string)
-        string = str(add(x,y))
+        string = add(x,y)
     elif string[1] == 'x':
         x,y = setup(string)
-        string = str(multiply(x,y))
+        string = multiply(x,y)
     elif string[1] == '/':
         x,y = setup(string)
-        string = str(divide(x,y))
+        string = divide(x,y)
     elif string[1] == '-':
         x,y = setup(string)
-        string = str(subtract(x,y))
-    else: return 'Error'
+        string = subtract(x,y)
     return string
 
 def special(num,operator):
@@ -69,4 +68,13 @@ def special(num,operator):
     if ans[-2:] == '.0':
         ans = ans[:-2]
     return ans
+    
+def memory(symbol,num,mem):
+    if symbol == 'M+':
+        mem = str(add(float(mem),float(num)))
+    elif symbol == 'M-':
+        mem = str(subtract(float(mem),float(num)))
+    if mem[-2:] == '.0':
+        mem = mem[:-2]
+    return str(mem)
     

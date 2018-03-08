@@ -23,6 +23,7 @@ def buttonShift(rectShift):
 acc = Rectangle(Point(1, 26),Point(25, 22))
 acc.setFill('LightGreen')
 acc.draw(win)
+memP = Point(acc.getP1().getX() + 2.5,acc.getP1().getY() - 1)
 #1    
 memC = Rectangle(Point(1,21),Point(5,17))
 memC.draw(win)
@@ -85,8 +86,9 @@ def getclick():
 from calc_functions import *
 
 def main():
-    display,displaypoint = '', acc.getCenter()
+    display,displaypoint,mem = '', acc.getCenter(), '0'
     displayElement = Text(displaypoint, display)
+    memoryElement = Text(memP, mem)
     calculateList = ['','','']
     listnum = 0
     while 1 == 1:
@@ -106,9 +108,20 @@ def main():
              or symbol == '+ / -' or symbol == '%':
             calculateList[listnum] = special(calculateList[listnum],symbol)
             display = calculateList[0] + calculateList[1] + calculateList[2]
-        #elif symbol == 'MC' or symbol == 'M+' or symbol == 'M-' \
-#             or symbol == 'MR' symbol == 'MS':
-            #memory()
+        elif symbol == 'MC' or symbol == 'M+' or symbol == 'M-' \
+             or symbol == 'MR' or symbol == 'MS':
+            if symbol == 'MC':
+                mem = '0'
+            elif symbol == 'MR':
+                calculateList[listnum] = mem
+            elif symbol == 'MS':
+                mem = calculateList[listnum]
+            else: mem = memory(symbol,calculateList[listnum],mem)
+            memoryElement.undraw()
+            memoryElement = Text(memP, 'Memory: ' + mem)
+            if symbol != 'MC':
+                memoryElement.draw(win)
+            display = calculateList[0] + calculateList[1] + calculateList[2]
         elif symbol == 'Clear':
             display = ''
             calculateList = ['','','']
