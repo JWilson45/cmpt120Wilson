@@ -11,51 +11,30 @@ def divide(x,y):
     return x/y
 
 def changeSign(x):
-    x = x[:-1]
-    x = x + '* -1'
-    x = eval(x)
-    x = str(x)
-    return x
+    x = float(x) * -1
+    return str(x)
 
 def percent(x):
-    x = x[:-1]
-    x = x + '/ 100'
-    x = eval(x)
-    x = str(x)
-    return x
+    x = float(x) / 100
+    return str(x)
 
 def setup(string):
     x = float(string[0])
-    y = float(string[1])
+    y = float(string[2])
     return x,y
     
 def determine(string):
-    string = string[:-1]
-    if '+' in string:
-        string = string.split('+')
+    if string[1] == '+':
         x,y = setup(string)
-        string = add(x,y)
-        string = str(string)
-        return string
-    if 'x' in string:
-        string = string.split('x')
+        string = str(add(x,y))
+    elif string[1] == 'x':
         x,y = setup(string)
-        string = multiply(x,y)
-        string = str(string)
-        return string
-    if '/' in string:
-        string = string.split('/')
+        string = str(multiply(x,y))
+    elif string[1] == '/':
         x,y = setup(string)
-        string = divide(x,y)
-        string = str(string)
-        return string
-    if '-' in string:
-        if string.count('-') > 1:
-            return 'Cant subrtact negitives yet'
-        string = string.split('-')
+        string = str(divide(x,y))
+    elif string[1] == '-':
         x,y = setup(string)
-        string = subtract(x,y)
-        string = str(string)
-        return string
-
+        string = str(subtract(x,y))
     else: return 'Error'
+    return string

@@ -57,8 +57,8 @@ equal = buttonCreation(add)
 
 #Text
 buttontxt=[[memC,'MC'],[memAdd,'M+'],[memSubtract,'M-'],[memRecall,'MR'],
-           [memSubstitute,'MS'],[Clear,'Clear'],[num7,'7'],[num4,'4'],[num1,'1'],
-           [num0,'0'],[changeSign,'+ / -'],[num8,'8'],[num5,'5'],[num2,'2'],
+           [memSubstitute,'MS'],[Clear,'Clear'],[num7,'7'],[num4,'4'],[num1,'1']
+           ,[num0,'0'],[changeSign,'+ / -'],[num8,'8'],[num5,'5'],[num2,'2'],
            [percent,'%'],[num9,'9'],[num6,'6'],[num3,'3'],[point,'.'],
            [divide,'/'],[mult,'x'],[sub,'-'],[add,'+'],[equal,'=']]
 
@@ -78,36 +78,49 @@ def getclick():
 from calc_functions import *
 
 def main():
-    display = ''
-    displaypoint = acc.getCenter()
+    display,displaypoint = '', acc.getCenter()
     displayElement = Text(displaypoint, display)
-    displayElement.draw(win)
+    calculateList = ['','','']
+    listnum = 0
     while 1 == 1:
-        while display[-1:] != '=':
-            display = display + str(getclick())
-            displayElement.undraw()
-            displayElement = Text(displaypoint,display)
-            displayElement.draw(win)
-            if display[-5:] == 'Clear':
-                display = ''
-                displayElement.undraw()
-            if display[-1:] == '%':
-                displayElement.undraw()
-                display = percent(display)
-                displayElement = Text(displaypoint,display)
-                displayElement.draw(win)
-            if display[-1:] == '$':
-                displayElement.undraw()
-                display = changeSign(display)
-                displayElement = Text(displaypoint,display)
-                displayElement.draw(win)
-        print(display)
-        display = determine(display)
-        displayElement.undraw()
+        symbol = getclick()
+        if symbol == '=':
+            display = determine(calculateList)
+            if display[-2:] == '.0':
+                display = display[:-2]
+            calculateList = [display, '' , '']
+            listnum = 0
+        elif symbol == '+' or symbol == '-' or symbol == '/' or symbol == 'x':
+            listnum = listnum + 1
+            calculateList[listnum] = calculateList[listnum] + symbol
+            listnum = listnum + 1
+            display = calculateList[0] + calculateList[1] + calculateList[2]
+        elif symbol == '+ / -' or symbol == '%':
+            if symbol == '+ / -':
+                calculateList[listnum] = changeSign(calculateList[listnum])
+            elif symbol == '%':
+                calculateList[listnum] = percent(calculateList[listnum])
+            display = calculateList[0] + calculateList[1] + calculateList[2]
+            if display[-2:] == '.0':
+                display = display[:-2]
+        #elif symbol == 'MC' or symbol == 'M+' or symbol == 'M-' \
+#             or symbol == 'MR' symbol == 'MS':
+            #memory()
+        elif symbol == 'Clear':
+            display = ''
+            calculateList = ['','','']
+            listnum = 0
+            display = calculateList[0] + calculateList[1] + calculateList[2]
+        else:
+            calculateList[listnum] = calculateList[listnum] + symbol
+            display = calculateList[0] + calculateList[1] + calculateList[2]
+        displayElement.undraw() 
         displayElement = Text(displaypoint,display)
         displayElement.draw(win)
         if display == 'Error':
             win.getMouse()
             display = ''
+            calculateList = ['','','']
+            listnum = 0
 
 main()
