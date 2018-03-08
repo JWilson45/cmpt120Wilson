@@ -1,8 +1,8 @@
 from graphics import *
 
 #Set window and coords
-win = GraphWin("Calculator",300,400)
-win.setCoords(0.0,0.0,22,27)
+win = GraphWin("Calculator",350,400)
+win.setCoords(0.0,0.0,26,27)
 
 def buttonCreation(perviousRect):
     new = Rectangle(Point(perviousRect.getP1().getX(),
@@ -20,7 +20,7 @@ def buttonShift(rectShift):
     new.draw(win)
     return new
 
-acc = Rectangle(Point(1, 26),Point(21, 22))
+acc = Rectangle(Point(1, 26),Point(25, 22))
 acc.setFill('LightGreen')
 acc.draw(win)
 #1    
@@ -54,13 +54,20 @@ mult = buttonCreation(divide)
 sub = buttonCreation(mult)
 add = buttonCreation(sub)
 equal = buttonCreation(add)
+#6
+sqrRoot = buttonShift(divide)
+square = buttonCreation(sqrRoot)
+_1overX = buttonCreation(square)
+blank1=buttonCreation(_1overX)
+blank2=buttonCreation(blank1)
 
 #Text
 buttontxt=[[memC,'MC'],[memAdd,'M+'],[memSubtract,'M-'],[memRecall,'MR'],
            [memSubstitute,'MS'],[Clear,'Clear'],[num7,'7'],[num4,'4'],[num1,'1']
            ,[num0,'0'],[changeSign,'+ / -'],[num8,'8'],[num5,'5'],[num2,'2'],
            [percent,'%'],[num9,'9'],[num6,'6'],[num3,'3'],[point,'.'],
-           [divide,'/'],[mult,'x'],[sub,'-'],[add,'+'],[equal,'=']]
+           [divide,'/'],[mult,'x'],[sub,'-'],[add,'+'],[equal,'='],
+           [sqrRoot,'√'],[square,'x^2'],[_1overX,'1/x'],[blank1,''],[blank2,'']]
 
 for var,txt in buttontxt:
     text = Text(var.getCenter(),txt)
@@ -95,14 +102,10 @@ def main():
             calculateList[listnum] = calculateList[listnum] + symbol
             listnum = listnum + 1
             display = calculateList[0] + calculateList[1] + calculateList[2]
-        elif symbol == '+ / -' or symbol == '%':
-            if symbol == '+ / -':
-                calculateList[listnum] = changeSign(calculateList[listnum])
-            elif symbol == '%':
-                calculateList[listnum] = percent(calculateList[listnum])
+        elif symbol == '√' or symbol == 'x^2' or symbol == '1/x'\
+             or symbol == '+ / -' or symbol == '%':
+            calculateList[listnum] = special(calculateList[listnum],symbol)
             display = calculateList[0] + calculateList[1] + calculateList[2]
-            if display[-2:] == '.0':
-                display = display[:-2]
         #elif symbol == 'MC' or symbol == 'M+' or symbol == 'M-' \
 #             or symbol == 'MR' symbol == 'MS':
             #memory()
