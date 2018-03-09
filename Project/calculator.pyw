@@ -86,28 +86,31 @@ def getclick():
 from calc_functions import *
 
 def main():
-    display,displaypoint,mem = '', acc.getCenter(), '0'
-    displayElement = Text(displaypoint, display)
-    memoryElement = Text(memP, mem)
-    calculateList = ['','','']
+    display,displaypoint,mem,calculateList = '',acc.getCenter(),'0',['','','']
+    displayElement, memoryElement = Text(displaypoint, display), Text(memP, mem)
     listnum = 0
+    def displaySet():
+        dis = calculateList[0] + calculateList[1] + calculateList[2]
+        return dis       
     while 1 == 1:
         symbol = getclick()
+#Equals
         if symbol == '=':
             display = determine(calculateList)
-            if display[-2:] == '.0':
-                display = display[:-2]
             calculateList = [display, '' , '']
             listnum = 0
+#Operators
         elif symbol == '+' or symbol == '-' or symbol == '/' or symbol == 'x':
             listnum = listnum + 1
             calculateList[listnum] = calculateList[listnum] + symbol
             listnum = listnum + 1
-            display = calculateList[0] + calculateList[1] + calculateList[2]
+            display = displaySet()
+#Special Characters
         elif symbol == '√' or symbol == 'x^2' or symbol == '1/x'\
              or symbol == '+ / -' or symbol == '%':
             calculateList[listnum] = special(calculateList[listnum],symbol)
-            display = calculateList[0] + calculateList[1] + calculateList[2]
+            display = displaySet()
+#Memory
         elif symbol == 'MC' or symbol == 'M+' or symbol == 'M-' \
              or symbol == 'MR' or symbol == 'MS':
             if symbol == 'MC':
@@ -121,20 +124,22 @@ def main():
             memoryElement = Text(memP, 'Memory: ' + mem)
             if symbol != 'MC':
                 memoryElement.draw(win)
-            display = calculateList[0] + calculateList[1] + calculateList[2]
+            display = displaySet()
+#Clear
         elif symbol == 'Clear':
             display = ''
             calculateList = ['','','']
             listnum = 0
-            display = calculateList[0] + calculateList[1] + calculateList[2]
+            display = displaySet()
+#Numbers
         else:
             calculateList[listnum] = calculateList[listnum] + symbol
-            display = calculateList[0] + calculateList[1] + calculateList[2]
+            display = displaySet()
         displayElement.undraw() 
         displayElement = Text(displaypoint,display)
         displayElement.draw(win)
+#Error
         if display == 'Error':
-            win.getMouse()
             display = ''
             calculateList = ['','','']
             listnum = 0
