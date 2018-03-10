@@ -121,7 +121,9 @@ def main():
                 mem = calculateList[listnum]
             else: mem = memory(symbol,calculateList[listnum],mem)
             memoryElement.undraw()
-            memoryElement = Text(memP, 'Memory: ' + mem)
+            memlen = len(mem)
+            memoryElement = Text(Point(memP.getX()+(memlen*.23),memP.getY()),\
+                                 'Memory: ' + mem)
             if symbol != 'MC':
                 memoryElement.draw(win)
             display = displaySet()
