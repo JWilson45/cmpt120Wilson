@@ -9,7 +9,6 @@ def buttonCreation(perviousRect):
                           perviousRect.getP1().getY() - 4),
                     Point(perviousRect.getP2().getX(),
                           perviousRect.getP2().getY() - 4))
-    new.draw(win)
     return new
 
 def buttonShift(rectShift):
@@ -17,7 +16,6 @@ def buttonShift(rectShift):
                           rectShift.getP1().getY()),
                     Point(rectShift.getP2().getX() + 4,
                           rectShift.getP2().getY()))
-    new.draw(win)
     return new
 
 acc = Rectangle(Point(1, 26),Point(25, 22))
@@ -26,7 +24,6 @@ acc.draw(win)
 memP = Point(acc.getP1().getX() + 2.5,acc.getP1().getY() - 1)
 #1    
 memC = Rectangle(Point(1,21),Point(5,17))
-memC.draw(win)
 memAdd = buttonCreation(memC)
 memSubtract = buttonCreation(memAdd)
 memRecall = buttonCreation(memSubtract)
@@ -37,7 +34,6 @@ num7 = buttonCreation(Clear)
 num4 = buttonCreation(num7)
 num1 = buttonCreation(num4)
 num0 = Rectangle(Point(5,5),Point(13,1))
-num0.draw(win)
 #3
 changeSign = buttonShift(Clear)
 num8 = buttonCreation(changeSign)
@@ -72,6 +68,7 @@ buttontxt=[[memC,'MC'],[memAdd,'M+'],[memSubtract,'M-'],[memRecall,'MR'],
 
 for var,txt in buttontxt:
     text = Text(var.getCenter(),txt)
+    var.draw(win)
     text.draw(win)
 
 #Get click
@@ -121,18 +118,15 @@ def main():
                 mem = calculateList[listnum]
             else: mem = memory(symbol,calculateList[listnum],mem)
             memoryElement.undraw()
-            memlen = len(mem)
-            memoryElement = Text(Point(memP.getX()+(memlen*.23),memP.getY()),\
-                                 'Memory: ' + mem)
             if symbol != 'MC':
+                memlen = len(mem)
+                memoryElement = Text(Point(memP.getX()+(memlen*.23),
+                                           memP.getY()),'Memory: ' + mem)
                 memoryElement.draw(win)
             display = displaySet()
 #Clear
-        elif symbol == 'Clear':
-            display = ''
-            calculateList = ['','','']
-            listnum = 0
-            display = displaySet()
+        elif symbol == 'Clear' or display == 'Error':
+            display,calculateList,listnum = reset()
 #Numbers
         else:
             calculateList[listnum] = calculateList[listnum] + symbol
@@ -140,10 +134,5 @@ def main():
         displayElement.undraw() 
         displayElement = Text(displaypoint,display)
         displayElement.draw(win)
-#Error
-        if display == 'Error':
-            display = ''
-            calculateList = ['','','']
-            listnum = 0
 
 main()

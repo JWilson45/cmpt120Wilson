@@ -82,3 +82,7 @@ def memory(symbol,num,mem):
         mem = subtract(mem,num)
     mem = rm0(mem)
     return mem
+
+def reset():
+    dis,lst,lstnum = '',['','',''],0
+    return dis,lst,lstnum
