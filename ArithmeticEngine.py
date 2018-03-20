@@ -17,12 +17,20 @@ def doLoop():
                or cmd == "quit":
                 break
             else:
-                print("'"+cmd+"'","is not a valid command. Try again.")
-                print()
+                print("'"+cmd+"'","is not a valid command. Try again.\n")             
         if cmd == "quit":
             break
-        num1 = int(input("Enter the first number: "))
-        num2 = int(input("Enter the second number: "))
+        try:
+            num1 = int(input("Enter the first number: "))
+            num2 = int(input("Enter the second number: "))
+            if cmd == "div":
+                num1/num2
+        except ValueError:
+            print("Must use numbers\n")
+            continue
+        except:
+            print("Cannot divide by 0\n")
+            continue
         if cmd == "add":
             result = num1 + num2
         elif cmd == "sub":
@@ -31,8 +39,6 @@ def doLoop():
             result = num1 * num2
         elif cmd == "div":
             result = num1 // num2
-        elif cmd == "quit":
-            break
         print("The result is " + str(result) + ".\n")
 def main():
     showIntro()
