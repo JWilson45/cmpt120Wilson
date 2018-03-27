@@ -24,7 +24,6 @@ def printBoard(board):
         print(' |')
         print(' +-----------+')
 def markBoard(board, row, col, player):
-    # check to see whether the desired square is blank
         if board[row][col] == symbol[0]:
             board[row][col] = player
             return True
@@ -32,10 +31,12 @@ def markBoard(board, row, col, player):
             print('That Spot is already taken.')
             print('Try again.\n')
             return False
-    # if so, set it to the player number
 def inputMove():
-    a = int(input("What row?"))
-    b = int(input("What Column?"))
+    try:
+        a = int(input("What row? "))
+        b = int(input("What Column? "))
+    except:
+        return 4,4
     return a,b
     
 def getPlayerMove():
@@ -45,11 +46,15 @@ def getPlayerMove():
         row,col=inputMove()
     return (row - 1,col - 1)
 def hasBlanks(board):
-    # for each row in the board...
-    # for each square in the row...
-    # check whether the square is blank
-    # if so, return True
-    return True # if no square is blank, return False
+    test = 0
+    for row in range(3):
+        for square in range(3):
+            if board[row][square] == symbol[1] or\
+               board[row][square] == symbol[2]:
+                test = test + 1
+                if test == 9:
+                    return False
+    return True
 def main():
     board = [
         [0,0,0],
@@ -57,11 +62,12 @@ def main():
         [0,0,0]
         ]
     player = 1
+    printBoard(board)
     while hasBlanks(board):
-        printBoard(board)
         x = False
         while x is False:
             row,col = getPlayerMove()
             x = markBoard(board,row,col,player)
         player = player % 2 + 1
+        printBoard(board)
 main()
