@@ -53,6 +53,7 @@ def hasBlanks(board):
                board[row][square] == symbol[2]:
                 test = test + 1
                 if test == 9:
+                    print('Game over.')
                     return False
     return True
 def main():
