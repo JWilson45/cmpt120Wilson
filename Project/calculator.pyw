@@ -145,7 +145,6 @@ def main():
                 displayElementAns.setText(display2)
                 continue
             except:
-                print('Excpet catch error')
                 continue
 #Scientific Mode
         elif symbol == 'Scientific \n Mode':
@@ -193,7 +192,6 @@ def main():
                 calculateList[listnum] = special(calculateList[listnum],symbol)
                 display = displaySet(calculateList)
             except:
-                print('Caught')
                 continue
 #Memory
         elif symbol == 'MC' or symbol == 'M+' or symbol == 'M-' \
@@ -208,7 +206,6 @@ def main():
                 try:
                     mem = memory(symbol,calculateList[listnum],mem)
                 except:
-                    print('caught')
                     continue
             memoryElement.undraw()
             if symbol != 'MC':
