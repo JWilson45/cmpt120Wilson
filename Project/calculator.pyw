@@ -82,7 +82,7 @@ buttontxt=[[memC,'MC'],[memAdd,'M+'],[memSubtract,'M-'],[memRecall,'MR'],
            [divide,'/'],[mult,'x'],[sub,'-'],[add,'+'],[equal,'='],
            [sqrRoot,'√'],[square,'x^2'],[_1overX,'1/x'],[Popen,'('],[Pclose,')']
            ]
-#make this work
+
 scientxt = [[sin,'sin'],[cos,'cos'],[tan,'tan'],[sin1,'sin-1'],[cos1,'cos-1'],
             [tan1,'tan-1'],[log,'log'],[ln,'ln'],[xY,'x^y'],[tenX,'10^x']]
 
@@ -112,27 +112,38 @@ def getclick():
 from calc_functions import *
 
 def main():
-    display,displaypoint,mem,calculateList = '',acc.getCenter(),'0',['']
+    centeracc = acc.getCenter()
+    display,displaypoint,mem,calculateList = '',Point(centeracc.getX(),
+                                                      centeracc.getY()+.5)\
+                                                      ,'0',['']
+    display2 = ''
+    displaypointans = Point(centeracc.getX(), centeracc.getY()-.5)
     displayElement, memoryElement = Text(displaypoint, display), Text(memP, mem)
+    displayElement.draw(win)
+    displayElementAns = Text(displaypointans,display2)
+    displayElementAns.draw(win)
     listnum = 0      
     while 1 == 1:
         symbol = getclick()
 #Equals
         if symbol == '=':
             try:
-                display = evaluate(calculateList)
+                display2 = evaluate(calculateList)
+                display = ''
                 calculateList = [display]
                 listnum = 0
+                displayElementAns.setText(display2)
+                continue
             except:
                 print('Excpet catch error')
-                pass
-                
-            
+                continue            
 #Operators
         elif symbol == '+' or symbol == '-' or symbol == '/' or symbol == 'x'\
              or symbol == '(' or symbol == ')':
             if symbol == 'x':
                 symbol = '*'
+            if display == '':
+                calculateList = [display2]
             calculateList.append('')
             listnum = listnum + 1
             calculateList[listnum] = calculateList[listnum] + symbol
@@ -155,7 +166,7 @@ def main():
             elif symbol == 'MR':
                 calculateList[listnum] = mem
             elif symbol == 'MS':
-                mem = calculateList[listnum]
+                mem = display2
             else: mem = memory(symbol,calculateList[listnum],mem)
             memoryElement.undraw()
             if symbol != 'MC':
@@ -163,16 +174,17 @@ def main():
                 memoryElement = Text(Point(memP.getX()+(memlen*.23),
                                            memP.getY()),'Memory: ' + mem)
                 memoryElement.draw(win)
+            if symbol == 'MS':
+                continue
             display = displaySet(calculateList)
 #Clear
         elif symbol == 'Clear' or display == 'Error':
-            display,calculateList,listnum = reset()
+            display,calculateList,listnum,display2 = reset()
 #Numbers
         else:
             calculateList[listnum] = calculateList[listnum] + symbol
             display = displaySet(calculateList)
-        displayElement.undraw() 
-        displayElement = Text(displaypoint,display)
-        displayElement.draw(win)
+        displayElement.setText(display)
+        displayElementAns.setText(display2)
 
 main()

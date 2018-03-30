@@ -72,5 +72,5 @@ def memory(symbol,num,mem):
     return mem
 
 def reset():
-    dis,lst,lstnum = '',[''],0
-    return dis,lst,lstnum
+    dis,lst,lstnum,dis2 = '',[''],0,''
+    return dis,lst,lstnum,dis2
