@@ -16,6 +16,42 @@ def changeSign(x):
     x = x * -1
     return x
 
+def sin(x):
+    x = math.sin(x)
+    return x
+
+def cos(x):
+    x = math.cos(x)
+    return x
+
+def tan(x):
+    x = math.tan(x)
+    return x
+
+def sin1(x):
+    x = math.sinh(x)
+    return x
+
+def cos1(x):
+    x = math.cosh(x)
+    return x
+
+def tan1(x):
+    x = math.tanh(x)
+    return x
+
+def logerithm(x):
+    x = math.log10(x)
+    return x
+
+def ln(x):
+    x = math.log(x)
+    return x
+
+def tenx(x):
+    x = 10 ** x
+    return x
+
 def percent(x):
     x = x / 100
     return x
@@ -59,6 +95,24 @@ def special(num,operator):
         ans = changeSign(num)
     elif operator == '%':
         ans = percent(num)
+    elif operator == 'sin':
+        ans = sin(num)
+    elif operator == 'cos':
+        ans = cos(num)
+    elif operator == 'tan':
+        ans = tan(num)
+    elif operator == 'sin-1':
+        ans = sin1(num)
+    elif operator == 'cos-1':
+        ans = cos1(num)
+    elif operator == 'tan-1':
+        ans = tan1(num)
+    elif operator == 'log':
+        ans = logerithm(num)
+    elif operator == 'ln':
+        ans = ln(num)
+    elif operator == '10^x':
+        ans = tenx(num)
     ans = rm0(ans)
     return ans
     

@@ -122,10 +122,10 @@ from calc_functions import *
 def main():
     centeracc = acc.getCenter()
     display,displaypoint,mem,calculateList = '',Point(centeracc.getX(),
-                                                      centeracc.getY()+.5)\
+                                                      centeracc.getY()+.20)\
                                                       ,'0',['']
     display2 = ''
-    displaypointans = Point(centeracc.getX(), centeracc.getY()-.5)
+    displaypointans = Point(centeracc.getX(), centeracc.getY()-.80)
     displayElement, memoryElement = Text(displaypoint, display), Text(memP, mem)
     displayElement.draw(win)
     displayElementAns = Text(displaypointans,display2)
@@ -165,12 +165,14 @@ def main():
                 block1.undraw()
                 block2.undraw()
                 displaySci.draw(win)
-                
+            continue
 #Operators
         elif symbol == '+' or symbol == '-' or symbol == '/' or symbol == 'x'\
-             or symbol == '(' or symbol == ')':
+             or symbol == '(' or symbol == ')' or symbol == 'x^y':
             if symbol == 'x':
                 symbol = '*'
+            if symbol == 'x^y':
+                symbol = '**'
             if display == '':
                 calculateList = [display2]
             calculateList.append('')
@@ -184,8 +186,10 @@ def main():
              or symbol == '+ / -' or symbol == '%' or symbol == 'sin'\
              or symbol == 'cos' or symbol == 'tan' or symbol == 'sin-1'\
              or symbol == 'cos-1' or symbol == 'tan-1' or symbol == 'log'\
-             or symbol == 'ln' or symbol == 'x^y' or symbol == '10^x':
+             or symbol == 'ln' or symbol == '10^x':
             try:
+                if display == '':
+                    calculateList = [display2]
                 calculateList[listnum] = special(calculateList[listnum],symbol)
                 display = displaySet(calculateList)
             except:
