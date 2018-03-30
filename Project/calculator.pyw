@@ -29,11 +29,13 @@ sin = startRect
 cos = buttonCreation(sin)
 tan = buttonCreation(cos)
 log = buttonCreation(tan)
+Popen = buttonCreation(log)
 #2
 sin1 = buttonShift(sin)
 cos1 = buttonCreation(sin1)
 tan1 = buttonCreation(cos1)
 ln = buttonCreation(tan1)
+Pclose =buttonShift(Popen)
 #3    
 memC = buttonShift(sin1)
 memAdd = buttonCreation(memC)
@@ -73,17 +75,23 @@ xY=buttonCreation(_1overX)
 tenX=buttonCreation(xY)
 
 #Text
-buttontxt=[[sin,'sin'],[cos,'cos'],[tan,'tan'],[sin1,'sin-1'],
-           [cos1,'cos-1'],[tan1,'tan-1'],[log,'log'],[ln,'ln'],
-           [memC,'MC'],[memAdd,'M+'],[memSubtract,'M-'],[memRecall,'MR'],
+buttontxt=[[memC,'MC'],[memAdd,'M+'],[memSubtract,'M-'],[memRecall,'MR'],
            [memSubstitute,'MS'],[Clear,'Clear'],[num7,'7'],[num4,'4'],[num1,'1']
            ,[num0,'0'],[changeSign,'+ / -'],[num8,'8'],[num5,'5'],[num2,'2'],
            [percent,'%'],[num9,'9'],[num6,'6'],[num3,'3'],[point,'.'],
            [divide,'/'],[mult,'x'],[sub,'-'],[add,'+'],[equal,'='],
-           [sqrRoot,'√'],[square,'x^2'],[_1overX,'1/x'],[xY,'x^y'],
-           [tenX,'10^x']]
+           [sqrRoot,'√'],[square,'x^2'],[_1overX,'1/x'],[Popen,'('],[Pclose,')']
+           ]
+#make this work
+scientxt = [[sin,'sin'],[cos,'cos'],[tan,'tan'],[sin1,'sin-1'],[cos1,'cos-1'],
+            [tan1,'tan-1'],[log,'log'],[ln,'ln'],[xY,'x^y'],[tenX,'10^x']]
 
 for var,txt in buttontxt:
+    text = Text(var.getCenter(),txt)
+    var.draw(win)
+    text.draw(win)
+
+for var,txt in scientxt:
     text = Text(var.getCenter(),txt)
     var.draw(win)
     text.draw(win)
@@ -96,34 +104,49 @@ def getclick():
             if var.getP1().getX() < click.getX() < var.getP2().getX()\
                and var.getP1().getY() > click.getY() > var.getP2().getY():
                 return txt
+        for var,txt in scientxt:
+            if var.getP1().getX() < click.getX() < var.getP2().getX()\
+               and var.getP1().getY() > click.getY() > var.getP2().getY():
+                return txt
 
 from calc_functions import *
 
 def main():
-    display,displaypoint,mem,calculateList = '',acc.getCenter(),'0',['','','']
+    display,displaypoint,mem,calculateList = '',acc.getCenter(),'0',['']
     displayElement, memoryElement = Text(displaypoint, display), Text(memP, mem)
-    listnum = 0
-    def displaySet():
-        dis = calculateList[0] + calculateList[1] + calculateList[2]
-        return dis       
+    listnum = 0      
     while 1 == 1:
         symbol = getclick()
 #Equals
         if symbol == '=':
-            display = determine(calculateList)
-            calculateList = [display, '' , '']
-            listnum = 0
+            try:
+                display = evaluate(calculateList)
+                calculateList = [display]
+                listnum = 0
+            except:
+                print('Excpet catch error')
+                pass
+                
+            
 #Operators
-        elif symbol == '+' or symbol == '-' or symbol == '/' or symbol == 'x':
+        elif symbol == '+' or symbol == '-' or symbol == '/' or symbol == 'x'\
+             or symbol == '(' or symbol == ')':
+            if symbol == 'x':
+                symbol = '*'
+            calculateList.append('')
             listnum = listnum + 1
             calculateList[listnum] = calculateList[listnum] + symbol
+            calculateList.append('')
             listnum = listnum + 1
-            display = displaySet()
+            display = displaySet(calculateList)
 #Special Characters
         elif symbol == '√' or symbol == 'x^2' or symbol == '1/x'\
-             or symbol == '+ / -' or symbol == '%':
+             or symbol == '+ / -' or symbol == '%' or symbol == 'sin'\
+             or symbol == 'cos' or symbol == 'tan' or symbol == 'sin-1'\
+             or symbol == 'cos-1' or symbol == 'tan-1' or symbol == 'log'\
+             or symbol == 'ln' or symbol == 'x^y' or symbol == '10^x':
             calculateList[listnum] = special(calculateList[listnum],symbol)
-            display = displaySet()
+            display = displaySet(calculateList)
 #Memory
         elif symbol == 'MC' or symbol == 'M+' or symbol == 'M-' \
              or symbol == 'MR' or symbol == 'MS':
@@ -140,14 +163,14 @@ def main():
                 memoryElement = Text(Point(memP.getX()+(memlen*.23),
                                            memP.getY()),'Memory: ' + mem)
                 memoryElement.draw(win)
-            display = displaySet()
+            display = displaySet(calculateList)
 #Clear
         elif symbol == 'Clear' or display == 'Error':
             display,calculateList,listnum = reset()
 #Numbers
         else:
             calculateList[listnum] = calculateList[listnum] + symbol
-            display = displaySet()
+            display = displaySet(calculateList)
         displayElement.undraw() 
         displayElement = Text(displaypoint,display)
         displayElement.draw(win)

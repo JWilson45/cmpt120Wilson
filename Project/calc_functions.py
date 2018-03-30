@@ -12,12 +12,6 @@ def add(x,y):
 def subtract(x,y):
     return x-y
 
-def multiply(x,y):
-    return x*y
-
-def divide(x,y):
-    return x/y
-
 def changeSign(x):
     x = x * -1
     return x
@@ -42,20 +36,14 @@ def oneOverx(x):
     x = 1 / x
     return x
 
-def setup(x, y):
-    x,y = float(x),float(y)
-    return x,y
+def displaySet(calculateList):
+    dis = ''
+    dis = dis.join(calculateList)
+    print(dis)
+    return dis 
 
-def determine(string):
-    x,y = setup(string[0],string[2])
-    if string[1] == '+':
-        string = add(x,y)
-    elif string[1] == 'x':
-        string = multiply(x,y)
-    elif string[1] == '/':
-        string = divide(x,y)
-    elif string[1] == '-':
-        string = subtract(x,y)
+def evaluate(lis):
+    string = eval(''.join(lis))
     string = rm0(string)
     return string
 
@@ -84,5 +72,5 @@ def memory(symbol,num,mem):
     return mem
 
 def reset():
-    dis,lst,lstnum = '',['','',''],0
+    dis,lst,lstnum = '',[''],0
     return dis,lst,lstnum
