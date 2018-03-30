@@ -47,14 +47,13 @@ Clear = buttonShift(memC)
 num7 = buttonCreation(Clear)
 num4 = buttonCreation(num7)
 num1 = buttonCreation(num4)
-num01 = buttonCreation(num1)
-num0 = Rectangle(num01.getP1(),Point(num01.getP2().getX()+4,
-                                     num01.getP2().getY())) 
+sciMode = buttonCreation(num1)
 #5
 changeSign = buttonShift(Clear)
 num8 = buttonCreation(changeSign)
 num5 = buttonCreation(num8)
 num2 = buttonCreation(num5)
+num0 = buttonCreation(num2)
 #6
 percent = buttonShift(changeSign)
 num9 = buttonCreation(percent)
@@ -77,37 +76,46 @@ tenX=buttonCreation(xY)
 #Text
 buttontxt=[[memC,'MC'],[memAdd,'M+'],[memSubtract,'M-'],[memRecall,'MR'],
            [memSubstitute,'MS'],[Clear,'Clear'],[num7,'7'],[num4,'4'],[num1,'1']
-           ,[num0,'0'],[changeSign,'+ / -'],[num8,'8'],[num5,'5'],[num2,'2'],
-           [percent,'%'],[num9,'9'],[num6,'6'],[num3,'3'],[point,'.'],
-           [divide,'/'],[mult,'x'],[sub,'-'],[add,'+'],[equal,'='],
-           [sqrRoot,'√'],[square,'x^2'],[_1overX,'1/x'],[Popen,'('],[Pclose,')']
+           ,[sciMode,'Scientific \n Mode'],[num0,'0'],[changeSign,'+ / -'],
+           [num8,'8'],[num5,'5'],[num2,'2'],[percent,'%'],[num9,'9'],[num6,'6'],
+           [num3,'3'],[point,'.'],[divide,'/'],[mult,'x'],[sub,'-'],[add,'+'],
+           [equal,'='],[sqrRoot,'√'],[square,'x^2'],[_1overX,'1/x'],
+           [Popen,'('],[Pclose,')']
            ]
 
 scientxt = [[sin,'sin'],[cos,'cos'],[tan,'tan'],[sin1,'sin-1'],[cos1,'cos-1'],
             [tan1,'tan-1'],[log,'log'],[ln,'ln'],[xY,'x^y'],[tenX,'10^x']]
+
+block1,block2 = Rectangle(sin.getP1(),ln.getP2()),Rectangle(xY.getP1(),
+                                                            tenX.getP2())
+block1.setFill('White')
+block2.setFill('White')
+block1.draw(win)
+block2.draw(win)
 
 for var,txt in buttontxt:
     text = Text(var.getCenter(),txt)
     var.draw(win)
     text.draw(win)
 
-for var,txt in scientxt:
-    text = Text(var.getCenter(),txt)
-    var.draw(win)
-    text.draw(win)
+##for var,txt in scientxt:
+##    text = Text(var.getCenter(),txt)
+##    var.draw(win)
+##    text.draw(win)
 
 #Get click
-def getclick():
+def getclick(sci):
     while 1 == 1:
         click = win.getMouse()
         for var,txt in buttontxt:
             if var.getP1().getX() < click.getX() < var.getP2().getX()\
                and var.getP1().getY() > click.getY() > var.getP2().getY():
                 return txt
-        for var,txt in scientxt:
-            if var.getP1().getX() < click.getX() < var.getP2().getX()\
-               and var.getP1().getY() > click.getY() > var.getP2().getY():
-                return txt
+        if sci:
+            for var,txt in scientxt:
+                if var.getP1().getX() < click.getX() < var.getP2().getX()\
+                   and var.getP1().getY() > click.getY() > var.getP2().getY():
+                    return txt
 
 from calc_functions import *
 
@@ -122,9 +130,11 @@ def main():
     displayElement.draw(win)
     displayElementAns = Text(displaypointans,display2)
     displayElementAns.draw(win)
-    listnum = 0      
+    displaySci = Text(Point(memP.getX()+.5,memP.getY() -2.5),'Scientific Mode')
+    listnum = 0
+    sci = False
     while 1 == 1:
-        symbol = getclick()
+        symbol = getclick(sci)
 #Equals
         if symbol == '=':
             try:
@@ -136,7 +146,26 @@ def main():
                 continue
             except:
                 print('Excpet catch error')
-                continue            
+                continue
+#Scientific Mode
+        elif symbol == 'Scientific \n Mode':
+            if sci:
+                sci = False
+                for var,txt in scientxt:
+                    var.undraw()
+                block1.draw(win)
+                block2.draw(win)
+                displaySci.undraw()
+            elif sci is False:
+                sci = True
+                for var,txt in scientxt:
+                    text = Text(var.getCenter(),txt)
+                    var.draw(win)
+                    text.draw(win)
+                block1.undraw()
+                block2.undraw()
+                displaySci.draw(win)
+                
 #Operators
         elif symbol == '+' or symbol == '-' or symbol == '/' or symbol == 'x'\
              or symbol == '(' or symbol == ')':
@@ -156,8 +185,12 @@ def main():
              or symbol == 'cos' or symbol == 'tan' or symbol == 'sin-1'\
              or symbol == 'cos-1' or symbol == 'tan-1' or symbol == 'log'\
              or symbol == 'ln' or symbol == 'x^y' or symbol == '10^x':
-            calculateList[listnum] = special(calculateList[listnum],symbol)
-            display = displaySet(calculateList)
+            try:
+                calculateList[listnum] = special(calculateList[listnum],symbol)
+                display = displaySet(calculateList)
+            except:
+                print('Caught')
+                continue
 #Memory
         elif symbol == 'MC' or symbol == 'M+' or symbol == 'M-' \
              or symbol == 'MR' or symbol == 'MS':
@@ -167,7 +200,12 @@ def main():
                 calculateList[listnum] = mem
             elif symbol == 'MS':
                 mem = display2
-            else: mem = memory(symbol,calculateList[listnum],mem)
+            else:
+                try:
+                    mem = memory(symbol,calculateList[listnum],mem)
+                except:
+                    print('caught')
+                    continue
             memoryElement.undraw()
             if symbol != 'MC':
                 memlen = len(mem)
