@@ -14,10 +14,9 @@ def buttonShift(shift):
                     Point(shift.getP2().getX() + 4,shift.getP2().getY()))
     return new
 
-acc = Rectangle(Point(1, 26),Point(33, 22))
+acc,memP = Rectangle(Point(1, 26),Point(33, 22)),Point(3.5, 25)
 acc.setFill('LightGreen')
 acc.draw(win)
-memP,beginRect = Point(3.5, 25),Rectangle(Point(-3,5),Point(1,1))
 displaySci = Text(Point(memP.getX()+.5,memP.getY() -2.5),'Scientific Mode')
 btxt = [
     ['sin','sin-1','MC','Clear','+ / -','%','/','√'],
@@ -26,53 +25,43 @@ btxt = [
     ['log','ln','MR','1','2','3','+','x^y'],
     ['(',')','MS','Scientific \n Mode','0','.','=','10^x']
     ]
-buttonDict = {'beginRec': Rectangle(Point(-3.0, 25.0), Point(1.0, 21.0))}
+buttonDict = {'begin': Rectangle(Point(-3.0, 25.0), Point(1.0, 21.0))}
 for i in range(5):
-    buttonDict['beginRec'] = buttonCreation(buttonDict['beginRec'])
-    prev = 'beginRec'
+    buttonDict['begin'],prev = buttonCreation(buttonDict['begin']),'begin'
     for j in range(8):
         sym = btxt[i][j]
         buttonDict[sym] = buttonShift(buttonDict[prev])
-        prev = sym
-        text = Text(buttonDict[sym].getCenter(),sym)
+        prev,text = sym, Text(buttonDict[sym].getCenter(),sym)
         buttonDict[sym].draw(win)
         text.draw(win)
 
-##block1,block2 = Rectangle(sin.getP1(),ln.getP2()),Rectangle(xY.getP1(),
-##                                                            tenX.getP2())
-##block1.setFill('White')
-##block2.setFill('White')
-##block1.draw(win)
-##block2.draw(win)
+block1 = Rectangle(buttonDict['sin'].getP1(),buttonDict['ln'].getP2())
+block2 = Rectangle(buttonDict['x^y'].getP1(),buttonDict['10^x'].getP2())
+block1.setFill('White')
+block2.setFill('White')
+block1.draw(win)
+block2.draw(win)
 
 #Get click
 def getclick(sci):
     while 1 == 1:
         click = win.getMouse()
+        if not sci and (1 < click.getX() < 9 and 21 > click.getY() > 5 or
+                        28 < click.getX() < 32 and 9 > click.getY() > 1):
+            continue
         for txt,var in buttonDict.items():
             if var.getP1().getX() < click.getX() < var.getP2().getX()\
                and var.getP1().getY() > click.getY() > var.getP2().getY():
                 return txt
-        if sci:
-            for var,txt in scientxt:
-                if var.getP1().getX() < click.getX() < var.getP2().getX()\
-                   and var.getP1().getY() > click.getY() > var.getP2().getY():
-                    return txt
 
 def sciMode(sci):
     if sci:
         sci = False
-        for var,txt in scientxt:
-            var.undraw()
         block1.draw(win)
         block2.draw(win)
         displaySci.undraw()
     elif not sci:
         sci = True
-        for var,txt in scientxt:
-            text = Text(var.getCenter(),txt)
-            var.draw(win)
-            text.draw(win)
         block1.undraw()
         block2.undraw()
         displaySci.draw(win)
@@ -89,10 +78,8 @@ def main():
     displaypointans = Point(centeracc.getX(), centeracc.getY()-.80)
     displayElement, memoryElement = Text(displaypoint, display), Text(memP, mem)
     displayElement.draw(win)
-    displayElementAns = Text(displaypointans,display2)
+    displayElementAns,listnum,sci = Text(displaypointans,display2), 0, False
     displayElementAns.draw(win)
-    listnum = 0
-    sci = False
     while 1 == 1:
         symbol = getclick(sci)
 #Equals
@@ -106,10 +93,6 @@ def main():
                 continue
             except:
                 continue
-#Scientific Mode
-        elif symbol == 'Scientific \n Mode':
-            sci = sciMode(sci)
-            continue
 #Operators
         elif symbol == '+' or symbol == '-' or symbol == '/' or symbol == 'x'\
              or symbol == '(' or symbol == ')' or symbol == 'x^y':
@@ -149,7 +132,7 @@ def main():
                 mem = display2
             else:
                 try:
-                    mem = memory(symbol,calculateList[listnum],mem)
+                    mem = memory(symbol,display2,mem)
                 except:
                     continue
             memoryElement.undraw()
@@ -164,6 +147,10 @@ def main():
 #Clear
         elif symbol == 'Clear' or display == 'Error':
             display,calculateList,listnum,display2 = reset()
+#Scientific Mode
+        elif symbol == 'Scientific \n Mode':
+            sci = sciMode(sci)
+            continue
 #Numbers
         else:
             calculateList[listnum] = calculateList[listnum] + symbol
