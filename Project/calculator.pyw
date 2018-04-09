@@ -35,12 +35,15 @@ for i in range(5):
         buttonDict[sym].draw(win)
         text.draw(win)
 
+def draw():
+    block1.draw(win)
+    block2.draw(win)
+    
 block1 = Rectangle(buttonDict['sin'].getP1(),buttonDict['ln'].getP2())
 block2 = Rectangle(buttonDict['x^y'].getP1(),buttonDict['10^x'].getP2())
 block1.setFill('White')
 block2.setFill('White')
-block1.draw(win)
-block2.draw(win)
+draw()
 
 #Get click
 def getclick(sci):
@@ -57,8 +60,7 @@ def getclick(sci):
 def sciMode(sci):
     if sci:
         sci = False
-        block1.draw(win)
-        block2.draw(win)
+        draw()
         displaySci.undraw()
     elif not sci:
         sci = True
@@ -70,15 +72,14 @@ def sciMode(sci):
 from calc_functions import *
 
 def main():
+#set varriables
     centeracc = acc.getCenter()
-    display,displaypoint,mem,calculateList = '',Point(centeracc.getX(),
-                                                      centeracc.getY()+.20)\
-                                                      ,'0',['']
-    display2 = ''
+    display,displaypoint = '',Point(centeracc.getX(),centeracc.getY()+.20)
+    calculateList,mem,display2 = [''],'0',''
     displaypointans = Point(centeracc.getX(), centeracc.getY()-.80)
     displayElement, memoryElement = Text(displaypoint, display), Text(memP, mem)
-    displayElement.draw(win)
     displayElementAns,listnum,sci = Text(displaypointans,display2), 0, False
+    displayElement.draw(win)
     displayElementAns.draw(win)
     while 1 == 1:
         symbol = getclick(sci)
@@ -91,22 +92,14 @@ def main():
                 listnum = 0
                 displayElementAns.setText(display2)
                 continue
-            except:
-                continue
+            except: continue
 #Operators
         elif symbol == '+' or symbol == '-' or symbol == '/' or symbol == 'x'\
              or symbol == '(' or symbol == ')' or symbol == 'x^y':
-            if symbol == 'x':
-                symbol = '*'
-            if symbol == 'x^y':
-                symbol = '**'
-            if display == '':
-                calculateList = [display2]
-            calculateList.append('')
-            listnum = listnum + 1
+            calculateList, symbol = operatortest(symbol,display2,calculateList,display)
+            calculateList,listnum = append(calculateList,listnum)
             calculateList[listnum] = calculateList[listnum] + symbol
-            calculateList.append('')
-            listnum = listnum + 1
+            calculateList,listnum = append(calculateList,listnum)
             display = displaySet(calculateList)
 #Special Characters
         elif symbol == '√' or symbol == 'x^2' or symbol == '1/x'\
@@ -155,6 +148,7 @@ def main():
         else:
             calculateList[listnum] = calculateList[listnum] + symbol
             display = displaySet(calculateList)
+            display2 = symbol
         displayElement.setText(display)
         displayElementAns.setText(display2)
 

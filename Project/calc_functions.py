@@ -128,3 +128,17 @@ def memory(symbol,num,mem):
 def reset():
     dis,lst,lstnum,dis2 = '',[''],0,''
     return dis,lst,lstnum,dis2
+
+def append(calculateList,listnum):
+    calculateList.append('')
+    listnum = listnum + 1
+    return calculateList,listnum
+
+def operatortest(symbol,display2,calculateList,display):
+    if symbol == 'x':
+        symbol = '*'
+    if symbol == 'x^y':
+        symbol = '**'
+    if display == '':
+        calculateList = [display2]
+    return calculateList, symbol
