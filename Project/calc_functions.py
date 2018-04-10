@@ -142,3 +142,14 @@ def operatortest(symbol,display2,calculateList,display):
     if display == '':
         calculateList = [display2]
     return calculateList, symbol
+    
+##def parenthesisTest(clist,sym):
+##    parent,parentOpen,parentClose = -1,-1,-1
+##    if sym == ')':
+##        for i in clist:
+##            parent += 1
+##            if i == '(':
+##                parentOpen += 1
+##            elif i == ')':
+##                parentClose += 1
+##    return parentOpen, parentClose

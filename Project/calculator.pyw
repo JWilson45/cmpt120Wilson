@@ -91,6 +91,7 @@ def main():
                 calculateList = [display]
                 listnum = 0
                 displayElementAns.setText(display2)
+                displayElement.setText('')
                 continue
             except: continue
 #Operators
@@ -100,7 +101,9 @@ def main():
             calculateList,listnum = append(calculateList,listnum)
             calculateList[listnum] = calculateList[listnum] + symbol
             calculateList,listnum = append(calculateList,listnum)
+##            parent = parenthesisTest(calculateList,symbol)
             display = displaySet(calculateList)
+            displayElement.setText(display)
 #Special Characters
         elif symbol == '√' or symbol == 'x^2' or symbol == '1/x'\
              or symbol == '+ / -' or symbol == '%' or symbol == 'sin'\
@@ -111,7 +114,7 @@ def main():
                 if display == '':
                     calculateList = [display2]
                 calculateList[listnum] = special(calculateList[listnum],symbol)
-                display = displaySet(calculateList)
+                display2 = displaySet(calculateList[listnum])
             except:
                 continue
 #Memory
@@ -126,8 +129,7 @@ def main():
             else:
                 try:
                     mem = memory(symbol,display2,mem)
-                except:
-                    continue
+                except: continue
             memoryElement.undraw()
             if symbol != 'MC':
                 memlen = len(mem)
@@ -137,9 +139,11 @@ def main():
             if symbol == 'MS':
                 continue
             display = displaySet(calculateList)
+            displayElement.setText(display)
 #Clear
         elif symbol == 'Clear' or display == 'Error':
             display,calculateList,listnum,display2 = reset()
+            displayElement.setText(display)
 #Scientific Mode
         elif symbol == 'Scientific \n Mode':
             sci = sciMode(sci)
@@ -148,8 +152,8 @@ def main():
         else:
             calculateList[listnum] = calculateList[listnum] + symbol
             display = displaySet(calculateList)
-            display2 = symbol
-        displayElement.setText(display)
+            display2 = calculateList[listnum]
+#        displayElement.setText(display)
         displayElementAns.setText(display2)
 
 main()
