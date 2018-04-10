@@ -1,7 +1,7 @@
 actions = ['reward', 'punish', 'threaten', 'joke', 'quit']
 emotions = ['anger', 'disgust', 'fear', 'happiness', 'sadness', 'surprise']
 reactions =["I'm getting really ticked off!",'Thats just not right, somethings wrong with you',
-            "You're scaring me! Please stop.",'That make me feel very happy!',"Oh... :( that makes me sad.",
+            "You're scaring me! Please stop.",'That makes me feel very happy!',"Oh... :( that makes me sad.",
             "Oh my, that certinly is surprising!"]
 
 reactionChart=[
@@ -11,8 +11,8 @@ reactionChart=[
 	[1,4,5,3,3,3]]
 
 def text(emote,act):
-    print('\nYou preformed the action: {}. The AI now has the feeling of: {}'.format(actions[act],emotions[emote]))
-    print('Bill: ',reactions[emote])
+    print('\nYou preformed the action: {}. The AI, Bill, now has the feeling of: {}'.format(actions[act].capitalize(),emotions[emote].capitalize()))
+    print('Bill: ','"' + reactions[emote] + '"')
     
 
 def startEmotion():
@@ -22,8 +22,12 @@ def startEmotion():
 
 def action():
 #Get user input for the action
-    act = actions.index(input('\nHow will you treat me? (reward, punish, threaten, joke, or quit)\n').lower())
-    return act
+    while True:
+        try: act = actions.index(input('\nHow will you treat me? (reward, punish, threaten, joke, or quit)\n').lower())
+        except:
+            print('Invalid command, try again.')
+            continue
+        return act
 	
 def quitCheck(act):
 #check for quit input to end the loop
@@ -39,7 +43,7 @@ def getNewEmot(act, emotion):
 def intro():
 #Prompt the intro message and get the first action for the loop
     emote = startEmotion()
-    print('Welcome, my name is Bill. My current emotion is: {}'.format(emotions[emote]))
+    print('Welcome, my name is Bill. My current emotion is: {}'.format(emotions[emote].capitalize()))
     act = action()
     return emote, act
 
@@ -50,14 +54,14 @@ def loop(emote, act):
         text(emote,act)
         act = action()
 
-def end(emo):
+def end():
 #The end prompt
     print("\nGoodbye.")
 
 def main():
 #Emote and act will be the current emotion and user action
     emote, act = intro()
-    emote = loop(emote, act)
-    end(emote)
+    loop(emote, act)
+    end()
 
 main()
