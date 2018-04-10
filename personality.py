@@ -1,7 +1,7 @@
 actions = ['reward', 'punish', 'threaten', 'joke', 'quit']
 emotions = ['anger', 'disgust', 'fear', 'happiness', 'sadness', 'surprise']
 reactions =["I'm getting really ticked off!",'Thats just not right, somethings wrong with you',
-            "You're scaring me! Please stop.","Oh... :( that makes me sad.",
+            "You're scaring me! Please stop.",'That make me feel very happy!',"Oh... :( that makes me sad.",
             "Oh my, that certinly is surprising!"]
 
 reactionChart=[
@@ -10,6 +10,11 @@ reactionChart=[
 	[2,0,0,2,2,0],
 	[1,4,5,3,3,3]]
 
+def text(emote,act):
+    print('\nYou preformed the action: {}. The AI now has the feeling of: {}'.format(actions[act],emotions[emote]))
+    print('Bill: ',reactions[emote])
+    
+
 def startEmotion():
 #Make random generator for the start emotion
     import random
@@ -17,36 +22,42 @@ def startEmotion():
 
 def action():
 #Get user input for the action
-    pass
+    act = actions.index(input('\nHow will you treat me? (reward, punish, threaten, joke, or quit)\n').lower())
+    return act
 	
 def quitCheck(act):
 #check for quit input to end the loop
-    pass
+    if act == 4:
+        return False
+    return True
 
 def getNewEmot(act, emotion):
 #get the next emotion from the grid and return the result as a number
-    pass
+    emotion = reactionChart[act][emotion]
+    return emotion
+    
 def intro():
 #Prompt the intro message and get the first action for the loop
     emote = startEmotion()
+    print('Welcome, my name is Bill. My current emotion is: {}'.format(emotions[emote]))
     act = action()
-#    return emote, act
-    pass
+    return emote, act
 
 def loop(emote, act):
     #primary loop, prompt user and call funcitons
     while quitCheck(act):
         emote = getNewEmot(act, emote)
+        text(emote,act)
         act = action()
 
-def end():
+def end(emo):
 #The end prompt
-	print('Goodbye.')
+    print("\nGoodbye.")
 
 def main():
 #Emote and act will be the current emotion and user action
     emote, act = intro()
-    loop(emote, act)
-    end()
+    emote = loop(emote, act)
+    end(emote)
 
 main()
