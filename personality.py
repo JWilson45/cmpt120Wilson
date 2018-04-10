@@ -1,5 +1,8 @@
 actions = ['reward', 'punish', 'threaten', 'joke', 'quit']
 emotions = ['anger', 'disgust', 'fear', 'happiness', 'sadness', 'surprise']
+reactions =["I'm getting really ticked off!",'Thats just not right, somethings wrong with you',
+            "You're scaring me! Please stop.","Oh... :( that makes me sad.",
+            "Oh my, that certinly is surprising!"]
 
 reactionChart=[
 	[3,3,5,3,3,3],
@@ -9,7 +12,8 @@ reactionChart=[
 
 def startEmotion():
 #Make random generator for the start emotion
-    pass
+    import random
+    return random.randint(0,5)
 
 def action():
 #Get user input for the action
