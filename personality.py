@@ -1,5 +1,11 @@
-#Create a list for emotions and user actions that will coorespond to the grid of reactions
-#Create a grid of reacions for how the AI will react
+actions = ['reward', 'punish', 'threaten', 'joke', 'quit']
+emotions = ['anger', 'disgust', 'fear', 'happiness', 'sadness', 'surprise']
+
+reactionChart=[
+	[3,3,5,3,3,3],
+	[2,0,0,2,1,2],
+	[2,0,0,2,2,0],
+	[1,4,5,3,3,3]]
 
 def startEmotion():
 #Make random generator for the start emotion
