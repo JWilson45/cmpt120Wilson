@@ -72,12 +72,6 @@ def oneOverx(x):
     x = 1 / x
     return x
 
-def displaySet(calculateList):
-    dis = ''
-    dis = dis.join(calculateList)
-    print(dis)
-    return dis 
-
 def evaluate(lis):
     string = eval(''.join(lis))
     string = rm0(string)
@@ -126,30 +120,19 @@ def memory(symbol,num,mem):
     return mem
 
 def reset():
-    dis,lst,lstnum,dis2 = '',[''],0,''
-    return dis,lst,lstnum,dis2
+    dis,lst,lstnum,listnum2,dis2 = '',[['']],0,0,''
+    return dis,lst,lstnum,listnum2,dis2
 
-def append(calculateList,listnum):
-    calculateList.append('')
-    listnum = listnum + 1
-    return calculateList,listnum
+def append(calculateList,listnum,listnum2):
+    calculateList[listnum].append('')
+    listnum2 = listnum2 + 1
+    return calculateList,listnum,listnum2
 
-def operatortest(symbol,display2,calculateList,display):
+def operatortest(symbol,prevResult,calculateList,display):
     if symbol == 'x':
         symbol = '*'
     if symbol == 'x^y':
         symbol = '**'
     if display == '':
-        calculateList = [display2]
+        calculateList = [prevResult]
     return calculateList, symbol
-    
-##def parenthesisTest(clist,sym):
-##    parent,parentOpen,parentClose = -1,-1,-1
-##    if sym == ')':
-##        for i in clist:
-##            parent += 1
-##            if i == '(':
-##                parentOpen += 1
-##            elif i == ')':
-##                parentClose += 1
-##    return parentOpen, parentClose
