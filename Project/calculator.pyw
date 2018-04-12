@@ -1,5 +1,7 @@
 from graphics import *
 
+# JA: You could simplify your code with some functions
+
 #Set window and coords
 win = GraphWin("Calculator",450,425)
 win.setCoords(0,0,34,27)
