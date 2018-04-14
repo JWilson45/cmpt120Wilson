@@ -72,13 +72,9 @@ def oneOverx(x):
     x = 1 / x
     return x
 
-def displaySet(calculateList):
-    dis = ''
-    dis = dis.join(calculateList)
-    print(dis)
-    return dis 
-
-def evaluate(lis):
+def evaluate(lis, listnum):
+    for i in range(listnum+1):
+        lis[i] = ''.join(lis[i])
     string = eval(''.join(lis))
     string = rm0(string)
     return string
@@ -126,5 +122,21 @@ def memory(symbol,num,mem):
     return mem
 
 def reset():
-    dis,lst,lstnum,dis2 = '',[''],0,''
-    return dis,lst,lstnum,dis2
+    dis,lst,lstnum,listnum2,dis2 = '',[['']],0,0,''
+    return dis,lst,lstnum,listnum2,dis2
+
+def append(calculateList,listnum,listnum2):
+    print(calculateList[listnum])
+    calculateList[listnum].append('')
+    listnum2 = listnum2 + 1
+    return calculateList,listnum,listnum2
+
+def operatortest(symbol,prevResult,calculateList,display):
+    if symbol == 'x':
+        symbol = '*'
+    if symbol == 'x^y':
+        symbol = '**'
+    if display == '':
+        calculateList = [[prevResult]]
+        display = prevResult
+    return calculateList, symbol, display
