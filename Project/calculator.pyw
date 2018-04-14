@@ -83,43 +83,62 @@ def main():
     displayElementAns.draw(win)
     listnum,listnum2 = 0,0
     prevResult = 0
+    prevSymbol = ''
     while 1 == 1:
         symbol = getclick(sci)
+        print(symbol)
+#Clear
+        if symbol == 'Clear' or display == 'Error':
+            display,calculateList,listnum,listnum2,display2 = reset()
+            displayElement.setText(display)
 #Equals
-        if symbol == '=':
+        elif symbol == '=':
             try:
-                display2 = evaluate(calculateList)
+                display2 = evaluate(calculateList,listnum)
                 displayElementAns.setText(display2)
-                prevResult = display2.getText()
-                display,calculateList,listnum,listnum2,display2 = reset(symbol)
-                displayElement.setText('')
+                prevResult = display2
+                display,calculateList,listnum,listnum2,display2 = reset()
+                display = ''
+                displayElement.setText(display)
                 continue
             except: continue
 #Parenthesis
         elif symbol == '(' or symbol == ')':
-            print(calculateList[listnum][listnum2])
             if symbol == '(':
-                if calculateList[listnum][listnum2] == '':
-                    del calculateList[listnum][listnum2]
                 calculateList.append(['('])
+                prevSymbol = '('
+                listnum2 = 0
             elif symbol == ')':
-                calculateList[listnum].append(')')
+                print(listnum,listnum2)
+                prevSymbol = ')'
+                try:
+                    calculateList[listnum].append(')')
+                    display2 = eval(''.join(calculateList[listnum]))
+                except:
+                    try:
+                        del calculateList[listnum]
+                    except:
+                        display = 'Error'
+                        displayElement.setText(display)
+                        displayElementAns.setText(display)
+                        continue
+                    continue
                 calculateList.append([])
-                display2 = evaluate(calculateList[listnum])
+                listnum2 = -1
             display = display + symbol
             displayElement.setText(display)
             listnum += 1
-            listnum2 = 0
             calculateList,listnum,listnum2 = append(calculateList,listnum,listnum2)
 #Operators
         elif symbol == '+' or symbol == '-' or symbol == '/' or symbol == 'x'\
-             or symbol == '(' or symbol == ')' or symbol == 'x^y':
-            calculateList, symbol = operatortest(symbol,prevResult,calculateList,display)
+             or symbol == 'x^y':
+            calculateList, symbol, display = operatortest(symbol,prevResult,calculateList,display)
             calculateList,listnum,listnum2 = append(calculateList,listnum,listnum2)
             calculateList[listnum][listnum2] = calculateList[listnum][listnum2] + symbol
             calculateList,listnum,listnum2 = append(calculateList,listnum,listnum2)
             display = display + symbol
             displayElement.setText(display)
+            prevSymbol = symbol
 #Special Characters
         elif symbol == '√' or symbol == 'x^2' or symbol == '1/x'\
              or symbol == '+ / -' or symbol == '%' or symbol == 'sin'\
@@ -128,13 +147,17 @@ def main():
              or symbol == 'ln' or symbol == '10^x':
             try:
                 if display == '':
-                    calculateList = [[display2]]
-                calculateList[listnum][listnum2] = special(calculateList[listnum][listnum2],symbol)
-                display2 = calculateList[listnum][listnum2]
-            except:
-                continue
+                    calculateList = [[prevResult]]
+                    calculateList[listnum][listnum2] = special(calculateList[listnum][listnum2],symbol)
+                if prevSymbol == ')' and symbol != '+ / -':
+                    calculateList[listnum - 1] = [special(eval(''.join(calculateList[listnum - 1])),symbol)]
+                    display2,display = calculateList[listnum - 1], display + symbol
+                    displayElement.setText(display)
+                else:
+                    calculateList[listnum][listnum2] = special(calculateList[listnum][listnum2],symbol)
+                    display2,display = calculateList[listnum][listnum2],display + symbol
+            except: continue
 #Memory
-            ###ERROR: Symbol from Memory gets through to display.
         elif symbol == 'MC' or symbol == 'M+' or symbol == 'M-' \
              or symbol == 'MR' or symbol == 'MS':
             if symbol == 'MC':
@@ -149,17 +172,11 @@ def main():
                 except: continue
             memoryElement.undraw()
             if symbol != 'MC':
- #               memlen = len(mem)
                 memoryElement = Text(Point(memP.getX()+(len(mem)*.23),
                                            memP.getY()),'Memory: ' + mem)
                 memoryElement.draw(win)
             if symbol == 'MS':
                 continue
-            display = display + symbol
-            displayElement.setText(display)
-#Clear
-        elif symbol == 'Clear' or display == 'Error':
-            display,calculateList,listnum,listnum2,display2 = reset()
             displayElement.setText(display)
 #Scientific Mode
         elif symbol == 'Scientific \n Mode':
@@ -170,8 +187,8 @@ def main():
             calculateList[listnum][listnum2] = calculateList[listnum][listnum2] + symbol
             display = display + symbol
             display2 = calculateList[listnum][listnum2]
-#        displayElement.setText(display)
-        print(calculateList,'\nDisplay: ', display, '\nDisplay2: ', display2,'\n')
+            prevSymbol = symbol
+        print(calculateList,'\nDisplay: ', display, '\nDisplay2: ', display2,'\nListnum and L2', listnum,listnum2,'\n')
         displayElementAns.setText(display2)
 
 main()
