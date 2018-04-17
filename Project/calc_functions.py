@@ -72,7 +72,9 @@ def oneOverx(x):
     x = 1 / x
     return x
 
-def evaluate(lis):
+def evaluate(lis, listnum):
+    for i in range(listnum+1):
+        lis[i] = ''.join(lis[i])
     string = eval(''.join(lis))
     string = rm0(string)
     return string
@@ -124,6 +126,7 @@ def reset():
     return dis,lst,lstnum,listnum2,dis2
 
 def append(calculateList,listnum,listnum2):
+    print(calculateList[listnum])
     calculateList[listnum].append('')
     listnum2 = listnum2 + 1
     return calculateList,listnum,listnum2
@@ -134,5 +137,6 @@ def operatortest(symbol,prevResult,calculateList,display):
     if symbol == 'x^y':
         symbol = '**'
     if display == '':
-        calculateList = [prevResult]
-    return calculateList, symbol
+        calculateList = [[prevResult]]
+        display = prevResult
+    return calculateList, symbol, display
