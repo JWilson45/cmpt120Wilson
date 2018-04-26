@@ -1,74 +1,45 @@
 from graphics import *
+from button import Button
 
-# JA: You could simplify your code with some functions
-
-#Set window and coords
 win = GraphWin("Calculator",450,425)
-win.setCoords(0,0,34,27)
+win.setCoords(0,0,9,8)
+buttonSpecs = [(1,1,'('),(2,1,')'),(3,1,'MS'),(4,1,'Sci \n Mode'),(5,1,'0'),(6,1,'.'),(7,1,'='),(8,1,'10^x'),
+               (1,2,'log'),(2,2,'ln'),(3,2,'MR'),(4,2,'1'),(5,2,'2'),(6,2,'3'),(7,2,'+'),(8,2,'x^y'),
+               (1,3,'tan'),(2,3,'tan-1'),(3,3,'M-'),(4,3,'4'),(5,3,'5'),(6,3,'6'),(7,3,'-'),(8,3,'1/x'),
+               (1,4,'cos'),(2,4,'cos-1'),(3,4,'M+'),(4,4,'7'),(5,4,'8'),(6,4,'9'),(7,4,'x'),(8,4,'x^2'),
+               (1,5,'sin'),(2,5,'sin-1'),(3,5,'MC'),(4,5,'Clear'),(5,5,'+ / -'),(6,5,'%'),(7,5,'/'),(8,5,'√')]
 
-def buttonCreation(pre):
-    new = Rectangle(Point(pre.getP1().getX(),pre.getP1().getY() - 4),
-                    Point(pre.getP2().getX(),pre.getP2().getY() - 4))
-    return new
+buttons = []
+for cx, cy, label in buttonSpecs:
+    buttons.append(Button(win, Point(cx, cy), .75, .75, label))
+for b in buttons:
+    b.activate()
 
-def buttonShift(shift):
-    new = Rectangle(Point(shift.getP1().getX() + 4,shift.getP1().getY()),
-                    Point(shift.getP2().getX() + 4,shift.getP2().getY()))
-    return new
+scientificButts = (buttons[7],buttons[8],buttons[9],buttons[15],buttons[16],buttons[17],buttons[24],buttons[25],buttons[32],buttons[33])
+for b in scientificButts:
+    b.deactivate()
 
-acc,memP = Rectangle(Point(1, 26),Point(33, 22)),Point(3.5, 25)
+acc,memP = Rectangle(Point(.6, 6),Point(8.4, 7.5)),Point(3.5, 25)
 acc.setFill('LightGreen')
 acc.draw(win)
 displaySci = Text(Point(memP.getX()+.5,memP.getY() -2.5),'Scientific Mode')
-btxt = [
-    ['sin','sin-1','MC','Clear','+ / -','%','/','√'],
-    ['cos','cos-1','M+','7','8','9','x','x^2'],
-    ['tan','tan-1','M-','4','5','6','-','1/x'],
-    ['log','ln','MR','1','2','3','+','x^y'],
-    ['(',')','MS','Scientific \n Mode','0','.','=','10^x']
-    ]
-buttonDict = {'begin': Rectangle(Point(-3.0, 25.0), Point(1.0, 21.0))}
-for i in range(5):
-    buttonDict['begin'],prev = buttonCreation(buttonDict['begin']),'begin'
-    for j in range(8):
-        sym = btxt[i][j]
-        buttonDict[sym] = buttonShift(buttonDict[prev])
-        prev,text = sym, Text(buttonDict[sym].getCenter(),sym)
-        buttonDict[sym].draw(win)
-        text.draw(win)
 
-def draw():
-    block1.draw(win)
-    block2.draw(win)
-    
-block1 = Rectangle(buttonDict['sin'].getP1(),buttonDict['ln'].getP2())
-block2 = Rectangle(buttonDict['x^y'].getP1(),buttonDict['10^x'].getP2())
-block1.setFill('White')
-block2.setFill('White')
-draw()
-
-#Get click
-def getclick(sci):
-    while 1 == 1:
+def getclick():
+    while True:
         click = win.getMouse()
-        if not sci and (1 < click.getX() < 9 and 21 > click.getY() > 5 or
-                        28 < click.getX() < 32 and 9 > click.getY() > 1):
-            continue
-        for txt,var in buttonDict.items():
-            if var.getP1().getX() < click.getX() < var.getP2().getX()\
-               and var.getP1().getY() > click.getY() > var.getP2().getY():
-                return txt
+        for b in buttons:
+            if b.clicked(click):
+                return b.getLabel()
 
 def sciMode(sci):
     if sci:
         sci = False
-        draw()
-        displaySci.undraw()
+        for b in scientificButts:
+            b.deactivate()
     elif not sci:
         sci = True
-        block1.undraw()
-        block2.undraw()
-        displaySci.draw(win)
+        for b in scientificButts:
+            b.activate()
     return sci
 
 from calc_functions import *
@@ -87,7 +58,7 @@ def main():
     prevResult = 0
     prevSymbol = ''
     while 1 == 1:
-        symbol = getclick(sci)
+        symbol = getclick()
         print(symbol)
 #Clear
         if symbol == 'Clear' or display == 'Error':
@@ -181,7 +152,7 @@ def main():
                 continue
             displayElement.setText(display)
 #Scientific Mode
-        elif symbol == 'Scientific \n Mode':
+        elif symbol == 'Sci \n Mode':
             sci = sciMode(sci)
             continue
 #Numbers
