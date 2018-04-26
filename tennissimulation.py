@@ -1,9 +1,9 @@
 # simulation.py
 from simstats import SimStats
-from rballgame import RBallGame
+from tennismatch import TennisMatch
 
 def printIntro():
-    print("This program simulates tennis games")
+    print("This program simulates tennis matches")
 
 def getInputs():
     probA = float(input("Enter the probability of A: "))
@@ -16,7 +16,7 @@ def main():
     probA, probB, n = getInputs()
     stats = SimStats()
     for i in range(n):
-        theGame = RBallGame(probA, probB)
+        theGame = TennisMatch(probA, probB)
         theGame.play()
         stats.update(theGame)
     stats.printReport()
