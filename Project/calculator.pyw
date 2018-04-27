@@ -19,10 +19,9 @@ scientificButts = (buttons[7],buttons[8],buttons[9],buttons[15],buttons[16],butt
 for b in scientificButts:
     b.deactivate()
 
-acc,memP = Rectangle(Point(.6, 6),Point(8.4, 7.5)),Point(3.5, 25)
+acc,memP = Rectangle(Point(.6, 6),Point(8.4, 7.5)),Point(1, 8)
 acc.setFill('LightGreen')
 acc.draw(win)
-displaySci = Text(Point(memP.getX()+.5,memP.getY() -2.5),'Scientific Mode')
 
 def getclick():
     while True:
@@ -51,12 +50,9 @@ def main():
     calculateList,mem,display2 = [['']],'0',''
     displaypointans = Point(centeracc.getX(), centeracc.getY()-.80)
     displayElement, memoryElement = Text(displaypoint, display), Text(memP, mem)
-    displayElementAns,sci = Text(displaypointans,display2), False
+    displayElementAns,sci,listnum,listnum2,prevResult,prevSymbol = Text(displaypointans,display2), False,0,0,0,''
     displayElement.draw(win)
     displayElementAns.draw(win)
-    listnum,listnum2 = 0,0
-    prevResult = 0
-    prevSymbol = ''
     while 1 == 1:
         symbol = getclick()
         print(symbol)
@@ -74,7 +70,9 @@ def main():
                 display = ''
                 displayElement.setText(display)
                 continue
-            except: continue
+            except:
+                display,calculateList,listnum,listnum2,display2 = reset()
+                continue
 #Parenthesis
         elif symbol == '(' or symbol == ')':
             if symbol == '(':
@@ -82,7 +80,6 @@ def main():
                 prevSymbol = '('
                 listnum2 = 0
             elif symbol == ')':
-                print(listnum,listnum2)
                 prevSymbol = ')'
                 try:
                     calculateList[listnum].append(')')
@@ -145,8 +142,7 @@ def main():
                 except: continue
             memoryElement.undraw()
             if symbol != 'MC':
-                memoryElement = Text(Point(memP.getX()+(len(mem)*.23),
-                                           memP.getY()),'Memory: ' + mem)
+                memoryElement = Text(memP,'Memory: ' + mem)
                 memoryElement.draw(win)
             if symbol == 'MS':
                 continue
