@@ -39,7 +39,6 @@ class TennisMatch:
         return True
 
     def tieBreaker(self):
-        print('Tie Breaking')
         while not self.gameOver():
             if self.server.winsServe():
                 self.server.incGScore()
@@ -76,7 +75,7 @@ class TennisMatch:
 
     def setOver(self):
         if self.playerA.getSetScore() == 6 and self.playerB.getSetScore() == 6:
-            return False
+            self.tieBreaker()
         elif (self.playerA.getSetScore() == 6 and self.playerB.getSetScore() != 5) \
              or (self.playerB.getSetScore() == 6 and self.playerA.getSetScore() != 5):
             return True
