@@ -1,3 +1,4 @@
+# encoding=utf8
 from graphics import *
 from button import Button
 

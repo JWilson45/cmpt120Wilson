@@ -1,3 +1,4 @@
+# encoding=utf8
 import math
 def rm0(x):
     x = str(x)
@@ -111,7 +112,7 @@ def special(num,operator):
         ans = tenx(num)
     ans = rm0(ans)
     return ans
-    
+
 def memory(symbol,num,mem):
     num, mem = float(num),float(mem)
     if symbol == 'M+':
