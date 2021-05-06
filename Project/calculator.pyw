@@ -49,7 +49,7 @@ def main():
     centeracc = acc.getCenter()
     display,displaypoint = '',Point(centeracc.getX(),centeracc.getY()+.20)
     calculateList,mem,display2 = [['']],'0',''
-    displaypointans = Point(centeracc.getX(), centeracc.getY()-.80)
+    displaypointans = Point(centeracc.getX(), centeracc.getY()-.50)
     displayElement, memoryElement = Text(displaypoint, display), Text(memP, mem)
     displayElementAns,sci,listnum,listnum2,prevResult,prevSymbol = Text(displaypointans,display2), False,0,0,0,''
     displayElement.draw(win)
