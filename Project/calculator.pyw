@@ -158,7 +158,7 @@ def main():
             display = display + symbol
             display2 = calculateList[listnum][listnum2]
             prevSymbol = symbol
-        print(calculateList,'\nDisplay: ', display, '\nDisplay2: ', display2,'\nListnum and L2', listnum,listnum2,'\n')
+        # print(calculateList,'\nDisplay: ', display, '\nDisplay2: ', display2,'\nListnum and L2', listnum,listnum2,'\n')
         displayElementAns.setText(display2)
 
 main()
